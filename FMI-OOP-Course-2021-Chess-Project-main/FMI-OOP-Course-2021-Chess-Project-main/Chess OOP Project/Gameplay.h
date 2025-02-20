@@ -31,6 +31,15 @@ private:
 	bool IsPieceBelongsToCurrentPlayer(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col, int currentPlayer);
 	bool IsEndPositionOccupiedByCurrentPlayerPiece(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col, int currentPlayer);
 
+	bool IsFirstDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsSecondDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsThirdDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsForthDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsLeftRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsRightRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsUpColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsDownColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+
 	void MakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
 
 	bool IsPawn(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col);

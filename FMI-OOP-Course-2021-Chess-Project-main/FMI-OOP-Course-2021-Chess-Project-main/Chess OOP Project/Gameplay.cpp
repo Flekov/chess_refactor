@@ -110,6 +110,130 @@ bool Gameplay::IsEndPositionOccupiedByCurrentPlayerPiece(Square board[BOARD_SIZE
 	}
 }
 
+bool Gameplay::IsFirstDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
+		int j = startPositionLetter;
+		for (j; j > endPositionLetter; j--) {
+			j--;
+			if (board[i][j].piece != nullptr) {
+				std::cout << "There's a piece blocking your move!" << std::endl;
+				return true;
+			}
+			break;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsSecondDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	int j = startPositionLetter;
+	for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
+		for (j; j < endPositionLetter; j++) {
+			j++;
+			if (board[i][j].piece != nullptr) {
+				std::cout << "There's a piece blocking your move!" << std::endl;
+				return true;
+			}
+			break;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsThirdDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	int j = startPositionLetter;
+	for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
+		j++;
+		for (j; j < endPositionLetter; j++) {
+			if (board[i][j].piece != nullptr) {
+				std::cout << "There's a piece blocking your move!" << std::endl;
+				return true;
+			}
+			break;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsForthDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	int j = startPositionNumber;
+	for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
+		for (j; j > endPositionLetter; j--) {
+			j--;
+			if (board[i][j].piece != nullptr) {
+				std::cout << "There's a piece blocking your move!" << std::endl;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsLeftRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	for (int i = startPositionLetter - 1; i >= endPositionLetter; i--) {
+		if (board[startPositionNumber][i].piece != nullptr) {
+			std::cout << "There's a piece blocking your move!" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsRightRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	for (int i = startPositionLetter + 1; i < endPositionLetter; i++) {
+		if (board[startPositionNumber][i].piece != nullptr) {
+			std::cout << "There's a piece blocking your move!" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsUpColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
+		if (board[i][startPositionLetter].piece != nullptr) {
+			std::cout << "There's a piece blocking your move!" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Gameplay::IsDownColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+{
+	for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
+		if (board[i][startPositionLetter].piece != nullptr) {
+			std::cout << "There's a piece blocking your move!" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+void Gameplay::MakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int currentPlayer, int rowDifference, int columnDifference)
+{
+	if (rowDifference == -1 && abs(columnDifference) == 1 && board[endPositionNumber][endPositionLetter].piece->getPlayer() == 1) {
+		std::cout << "You have taken the enemy's " << board[endPositionNumber][endPositionLetter].piece->getName() << "!" << std::endl;
+		if (board[endPositionNumber][endPositionLetter].piece->getName() == "King") {
+			isKingDead = true;
+		}
+		board[endPositionNumber][endPositionLetter].piece = board[startPositionNumber][startPositionLetter].piece;
+		board[startPositionNumber][startPositionLetter].piece = nullptr;
+	}
+	else {
+		std::cout << "Move successful!" << std::endl;
+		board[endPositionNumber][endPositionLetter].piece = board[startPositionNumber][startPositionLetter].piece;
+		board[startPositionNumber][startPositionLetter].piece = nullptr;
+	}
+}
+
 bool Gameplay::IsPawn(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col)
 {
 	if (board[row][col].piece->getName() == "Pawn") {
@@ -156,23 +280,6 @@ bool Gameplay::IsPawnMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startPo
 		return true;
 }
 
-void Gameplay::MakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int currentPlayer, int rowDifference, int columnDifference)
-{
-	if (rowDifference == -1 && abs(columnDifference) == 1 && board[endPositionNumber][endPositionLetter].piece->getPlayer() == 1) {
-		std::cout << "You have taken the enemy's " << board[endPositionNumber][endPositionLetter].piece->getName() << "!" << std::endl;
-		if (board[endPositionNumber][endPositionLetter].piece->getName() == "King") {
-			isKingDead = true;
-		}
-		board[endPositionNumber][endPositionLetter].piece = board[startPositionNumber][startPositionLetter].piece;
-		board[startPositionNumber][startPositionLetter].piece = nullptr;
-	}
-	else {
-		std::cout << "Move successful!" << std::endl;
-		board[endPositionNumber][endPositionLetter].piece = board[startPositionNumber][startPositionLetter].piece;
-		board[startPositionNumber][startPositionLetter].piece = nullptr;
-	}
-}
-
 bool Gameplay::IsKing(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col)
 {
 	if (board[row][col].piece->getName() == "King") {
@@ -210,88 +317,31 @@ bool Gameplay::IsQueenMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startP
 		return false;
 	}
 	if (rowDifference > 0 && columnDifference > 0) {
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			int a = startPositionLetter;
-			for (a; a > endPositionLetter; a--) {
-				a--;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if(IsFirstDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference < 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			for (a; a < endPositionLetter; a++) {
-				a++;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsSecondDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference > 0 && columnDifference < 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			a++;
-			for (a; a < endPositionLetter; a++) {
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsThirdDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference > 0) {
-		int a = startPositionNumber;
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			for (a; a > endPositionLetter; a--) {
-				a--;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-			}
-		}
+		if (IsForthDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference == 0 && columnDifference > 0) {
-		for (int i = startPositionLetter - 1; i >= endPositionLetter; i--) {
-			if (board[startPositionNumber][i].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsLeftRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference == 0 && columnDifference < 0) {
-		for (int i = startPositionLetter + 1; i < endPositionLetter; i++) {
-			if (board[startPositionNumber][i].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsRightRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference > 0 && columnDifference == 0) {
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			if (board[i][startPositionLetter].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsDownColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference == 0) {
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			if (board[i][startPositionLetter].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsUpColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
+	else
+		return true;
 }
 
 bool Gameplay::IsKnight(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col)
@@ -331,56 +381,16 @@ bool Gameplay::IsBishopMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int start
 		return false;
 	}
 	if (rowDifference > 0 && columnDifference > 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			for (a; a > endPositionLetter; a--) {
-				a--;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsFirstDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference < 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			for (a; a < endPositionLetter; a++) {
-				a++;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsSecondDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference > 0 && columnDifference < 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			for (a; a < endPositionLetter; a++) {
-				a++;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsThirdDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference > 0) {
-		int a = startPositionLetter;
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			for (a; a > endPositionLetter; a--) {
-				a--;
-				if (board[i][a].piece != nullptr) {
-					std::cout << "There's a piece blocking your move!" << std::endl;
-					return false;
-				}
-				break;
-			}
-		}
+		if (IsForthDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else
 		return true;
@@ -403,43 +413,20 @@ bool Gameplay::IsRookMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startPo
 		return false;
 	}
 	if (rowDifference == 0 && columnDifference > 0) {
-		for (int i = startPositionLetter - 1; i > endPositionLetter; i--) {
-			if (board[startPositionNumber][i].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsLeftRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference == 0 && columnDifference < 0) {
-		for (int i = startPositionLetter + 1; i < endPositionLetter; i++) {
-			if (board[startPositionNumber][i].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsRightRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference > 0 && columnDifference == 0) {
-		for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
-			if (board[i][startPositionLetter].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsDownColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else if (rowDifference < 0 && columnDifference == 0) {
-		for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
-			if (board[i][startPositionLetter].piece != nullptr) {
-				std::cout << "There's a piece blocking your move!" << std::endl;
-				return false;
-			}
-		}
+		if (IsUpColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
 	}
 	else
 		return true;
 }
-
-
-
 
 bool Gameplay::IsMovePossible(String moveCommand, Square board[BOARD_SIZE][BOARD_SIZE], int currentPlayer) {
 
