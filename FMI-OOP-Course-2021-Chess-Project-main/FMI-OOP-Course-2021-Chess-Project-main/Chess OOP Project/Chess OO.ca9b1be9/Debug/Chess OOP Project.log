@@ -1,0 +1,33 @@
+﻿  ChessGame.cpp
+  Gameplay.cpp
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(545,31): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(551,29): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(552,30): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(554,28): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(555,29): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(556,30): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(557,29): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(559,29): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(560,30): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(585,34): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(585,34): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(586,30): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(586,30): warning C4309: '=': truncation of constant value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(587,34): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(587,34): warning C4309: '=': truncation of constant value
+  Piece.cpp
+  Square.cpp
+  String.cpp
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(9,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(27,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(36,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(85,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(87,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\String.cpp(139,22): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(439,1): warning C4715: 'Gameplay::IsRookMoveValid': not all control paths return a value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(295,1): warning C4715: 'Gameplay::IsQueenMoveValid': not all control paths return a value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(387,1): warning C4715: 'Gameplay::IsBishopMoveValid': not all control paths return a value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(646,1): warning C4715: 'Gameplay::GetColCoordinateForVisualization': not all control paths return a value
+C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Gameplay.cpp(618,1): warning C4715: 'Gameplay::GetRowCoordinateForVisualization': not all control paths return a value
+  Chess OOP Project.vcxproj -> C:\Users\snikolov\Downloads\FMI-OOP-Course-2021-Chess-Project-main\FMI-OOP-Course-2021-Chess-Project-main\Chess OOP Project\Debug\Chess OOP Project.exe

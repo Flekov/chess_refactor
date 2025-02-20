@@ -1,0 +1,21 @@
+﻿  Board.cpp
+  ChessGame.cpp
+  Gameplay.cpp
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(545,23): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(551,21): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(552,22): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(554,20): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(555,21): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(556,22): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(557,21): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(559,21): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(560,22): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(585,30): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(585,26): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(586,26): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(586,22): warning C4309: '=': truncation of constant value
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(587,30): warning C4305: '=': truncation from 'int' to 'char'
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Gameplay.cpp(587,26): warning C4309: '=': truncation of constant value
+  Piece.cpp
+  Generating Code...
+  Chess OOP Project.vcxproj -> C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Debug\Chess OOP Project.exe

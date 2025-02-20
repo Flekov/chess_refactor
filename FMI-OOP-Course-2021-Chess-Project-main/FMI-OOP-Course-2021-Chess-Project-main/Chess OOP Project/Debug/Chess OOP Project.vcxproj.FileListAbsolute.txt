@@ -1,0 +1,2 @@
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Debug\Chess OOP Project.exe
+C:\Users\sezer\C++ FMI\repos\Chess OOP Project\Debug\Chess OOP Project.pdb
