@@ -173,7 +173,44 @@ bool Gameplay::IsForthDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE
 	return false;
 }
 
-bool Gameplay::IsLeftRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+bool Gameplay::IsTargetedDiagonalsBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int rowDifference, int columnDifference)
+{
+	if (rowDifference > 0 && columnDifference > 0) {
+		if (IsFirstDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+	else if (rowDifference < 0 && columnDifference < 0) {
+		if (IsSecondDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+	else if (rowDifference > 0 && columnDifference < 0) {
+		if (IsThirdDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+	else if (rowDifference < 0 && columnDifference > 0) {
+		if (IsForthDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+
+	return false;
+}
+
+bool Gameplay::IsTargetedRowOrColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int rowDifference, int columnDifference)
+{
+	if (rowDifference == 0 && columnDifference > 0) {
+		if (IsRowOnLeftBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+	else if (rowDifference == 0 && columnDifference < 0) {
+		if (IsRowOnRightBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+		}
+	else if (rowDifference > 0 && columnDifference == 0) {
+			if (IsColDownwardBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+			}
+	else if (rowDifference < 0 && columnDifference == 0) {
+		if (IsColUpwardBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return true;
+	}
+
+	return false;
+
+}
+
+bool Gameplay::IsRowOnLeftBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
 {
 	for (int i = startPositionLetter - 1; i >= endPositionLetter; i--) {
 		if (board[startPositionNumber][i].piece != nullptr) {
@@ -184,7 +221,7 @@ bool Gameplay::IsLeftRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int
 	return false;
 }
 
-bool Gameplay::IsRightRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+bool Gameplay::IsRowOnRightBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
 {
 	for (int i = startPositionLetter + 1; i < endPositionLetter; i++) {
 		if (board[startPositionNumber][i].piece != nullptr) {
@@ -195,7 +232,7 @@ bool Gameplay::IsRightRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], in
 	return false;
 }
 
-bool Gameplay::IsUpColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+bool Gameplay::IsColUpwardBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
 {
 	for (int i = startPositionNumber + 1; i < endPositionNumber; i++) {
 		if (board[i][startPositionLetter].piece != nullptr) {
@@ -206,7 +243,7 @@ bool Gameplay::IsUpColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int s
 	return false;
 }
 
-bool Gameplay::IsDownColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
+bool Gameplay::IsColDownwardBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter)
 {
 	for (int i = startPositionNumber - 1; i > endPositionNumber; i--) {
 		if (board[i][startPositionLetter].piece != nullptr) {
@@ -217,7 +254,7 @@ bool Gameplay::IsDownColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int
 	return false;
 }
 
-void Gameplay::MakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int currentPlayer, int rowDifference, int columnDifference)
+void Gameplay::MovePiece(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int currentPlayer, int rowDifference, int columnDifference)
 {
 	if (rowDifference == -1 && abs(columnDifference) == 1 && board[endPositionNumber][endPositionLetter].piece->getPlayer() == 1) {
 		std::cout << "You have taken the enemy's " << board[endPositionNumber][endPositionLetter].piece->getName() << "!" << std::endl;
@@ -316,29 +353,13 @@ bool Gameplay::IsQueenMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startP
 		std::cout << "Queens can move like rooks and bishops only" << std::endl;
 		return false;
 	}
-	if (rowDifference > 0 && columnDifference > 0) {
-		if(IsFirstDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
+	if (IsTargetedDiagonalsBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, rowDifference, columnDifference))
+	{
+		return false;
 	}
-	else if (rowDifference < 0 && columnDifference < 0) {
-		if (IsSecondDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference > 0 && columnDifference < 0) {
-		if (IsThirdDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference < 0 && columnDifference > 0) {
-		if (IsForthDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference == 0 && columnDifference > 0) {
-		if (IsLeftRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference == 0 && columnDifference < 0) {
-		if (IsRightRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference > 0 && columnDifference == 0) {
-		if (IsDownColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference < 0 && columnDifference == 0) {
-		if (IsUpColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
+	else if (IsTargetedRowOrColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, rowDifference, columnDifference))
+	{
+		return false;
 	}
 	else
 		return true;
@@ -380,17 +401,9 @@ bool Gameplay::IsBishopMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int start
 		std::cout << "Bishops can move only diagonally" << std::endl;
 		return false;
 	}
-	if (rowDifference > 0 && columnDifference > 0) {
-		if (IsFirstDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference < 0 && columnDifference < 0) {
-		if (IsSecondDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference > 0 && columnDifference < 0) {
-		if (IsThirdDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference < 0 && columnDifference > 0) {
-		if (IsForthDiagonalBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
+	if (IsTargetedDiagonalsBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, rowDifference, columnDifference))
+	{
+		return false;
 	}
 	else
 		return true;
@@ -412,20 +425,35 @@ bool Gameplay::IsRookMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startPo
 		std::cout << "Rooks can move only horizontal or vertical" << std::endl;
 		return false;
 	}
-	if (rowDifference == 0 && columnDifference > 0) {
-		if (IsLeftRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference == 0 && columnDifference < 0) {
-		if (IsRightRowBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference > 0 && columnDifference == 0) {
-		if (IsDownColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
-	}
-	else if (rowDifference < 0 && columnDifference == 0) {
-		if (IsUpColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter)) return false;
+	if (IsTargetedRowOrColBlockedByPiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, rowDifference, columnDifference))
+	{
+		return false;
 	}
 	else
 		return true;
+}
+
+bool Gameplay::CanMakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startPositionNumber, int startPositionLetter, int endPositionNumber, int endPositionLetter, int currentPlayer, int rowDifference, int columnDifference)
+{
+	if (IsPawn(board, startPositionNumber, startPositionLetter)) {
+		if (IsPawnMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	else if (IsKing(board, startPositionNumber, startPositionLetter)) {
+		if (IsKingMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	else if (IsQueen(board, startPositionNumber, startPositionLetter)) {
+		if (IsQueenMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	else if (IsKnight(board, startPositionNumber, startPositionLetter)) {
+		if (IsKnightMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	else if (IsBishop(board, startPositionNumber, startPositionLetter)) {
+		if (IsBishopMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	else if (IsRook(board, startPositionNumber, startPositionLetter)) {
+		if (IsRookMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) return true;
+	}
+	return false;
 }
 
 bool Gameplay::IsMovePossible(String moveCommand, Square board[BOARD_SIZE][BOARD_SIZE], int currentPlayer) {
@@ -442,71 +470,15 @@ bool Gameplay::IsMovePossible(String moveCommand, Square board[BOARD_SIZE][BOARD
 	int rowDifference = startPositionNumber - endPositionNumber;
 	int columnDifference = startPositionLetter - endPositionLetter;
 
-	if (IsPawn(board, startPositionNumber, startPositionLetter))
+	if (CanMakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
 	{
-		if(!IsPawnMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference)) 
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
+		MovePiece(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
+		return true;
 	}
-	else if (IsKing(board, startPositionNumber, startPositionLetter))
-	{
-		if (!IsKingMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
-	}
-	else if (IsQueen(board, startPositionNumber, startPositionLetter))
-	{
-		if (!IsQueenMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
-	}
-	else if (IsKnight(board, startPositionNumber, startPositionLetter))
-	{
-		if (!IsKnightMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
-	}
-	else if (IsBishop(board, startPositionNumber, startPositionLetter))
-	{
-		if (!IsBishopMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
-	}
-	else if (IsRook(board, startPositionNumber, startPositionLetter))
-	{
-		if (!IsRookMoveValid(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference))
-			return false;
-		else
-		{
-			MakeMove(board, startPositionNumber, startPositionLetter, endPositionNumber, endPositionLetter, currentPlayer, rowDifference, columnDifference);
-			return true;
-		}
-	}
-	else 
-	{
-		return false;
-	}
+
+	return false;
 }
+
 /*
 void Gameplay::undo(String move,Board board[8][8]) {
 	
@@ -695,7 +667,7 @@ void Gameplay::PlacePieces(Square board[8][8])
 		std::cout << std::endl;
 	}
 }
-void Gameplay::PrintBoard(Square board[8][8])
+void Gameplay::PrintBoard(Square board[BOARD_SIZE][BOARD_SIZE])
 {
 	FillBoard();
 	PrintNumbering();

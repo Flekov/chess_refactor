@@ -11,6 +11,6 @@ int main() {
 	RECT r;
 	GetWindowRect(console, &r);
 	MoveWindow(console, r.left, r.top, 800, 700, TRUE);
-	Gameplay game;
-	game.PlayGame();
+	Gameplay chess;
+	chess.PlayGame();
 }

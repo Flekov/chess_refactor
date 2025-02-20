@@ -35,12 +35,15 @@ private:
 	bool IsSecondDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
 	bool IsThirdDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
 	bool IsForthDiagonalBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
-	bool IsLeftRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
-	bool IsRightRowBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
-	bool IsUpColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
-	bool IsDownColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsTargetedDiagonalsBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int rowDifference, int colDifference);
 
-	void MakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
+	bool IsRowOnLeftBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsRowOnRightBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsColUpwardBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsColDownwardBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol);
+	bool IsTargetedRowOrColBlockedByPiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int rowDifference, int colDifference);
+
+	void MovePiece(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
 
 	bool IsPawn(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col);
 	bool IsPawnMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
@@ -59,6 +62,8 @@ private:
 
 	bool IsRook(Square board[BOARD_SIZE][BOARD_SIZE], int row, int col);
 	bool IsRookMoveValid(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
+
+	bool CanMakeMove(Square board[BOARD_SIZE][BOARD_SIZE], int startRow, int startCol, int endRow, int endCol, int currentPlayer, int rowDifference, int colDifference);
 
 	const int ROW_1_COORDINATE_VISUALIZATION = 4; 				const int COL_1_COORDINATE_VISUALIZATION = 10;
 	const int ROW_2_COORDINATE_VISUALIZATION = 7;				const int COL_2_COORDINATE_VISUALIZATION = 17;
@@ -82,8 +87,8 @@ public:
 	Gameplay();
 	~Gameplay();
 	void PlayGame();
-	bool IsMoveCommandValid(String move);
-	bool IsMovePossible(String move, Square board[8][8], int currentPlayer);
+	bool IsMoveCommandValid(String moveCommand);
+	bool IsMovePossible(String moveCommand, Square board[BOARD_SIZE][BOARD_SIZE], int currentPlayer);
 	void FillBoard();
 	void PaintBoard();
 	void PrintBorders();
